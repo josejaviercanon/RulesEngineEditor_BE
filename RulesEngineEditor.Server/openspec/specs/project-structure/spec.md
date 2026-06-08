@@ -15,6 +15,9 @@ The template SHALL organize source code using root-level folder boundaries that 
 - `/Infrastructure/Abstractions` — Implementations of external system interfaces (e.g., file storage, email, time providers).
 - `/Infrastructure/Data` — EF Core `DbContext`, `IEntityTypeConfiguration<T>` classes, and save interceptors. Uses `Microsoft.EntityFrameworkCore.SqlServer`.
 - `/Infrastructure/Identity` — ASP.NET Core Identity configuration, Passkey/WebAuthn setup via `IdentityPasskeyOptions`.
+- `/Infrastructure/Repositories/[Entity]/` — Concrete stored procedure repositories organized by entity, each inheriting from `BaseStoredProcedureRepository<TEntity, TKey>`. Each entity subfolder contains:
+  - `I{Entity}Repository.cs` — Interface extending `IStoredProcedureRepository<TEntity, TKey>`
+  - `{Entity}Repository.cs` — Concrete implementation
 - `/Middleware` — Global error handling via .NET 10 `IExceptionHandler`.
 - `/Controllers` — Traditional MVC API Controllers inheriting from `ControllerBase`.
 
@@ -29,6 +32,55 @@ The template SHALL organize source code using root-level folder boundaries that 
 #### Scenario: Infrastructure depends on Business abstractions
 - **WHEN** an Infrastructure class (e.g., repository, service implementation) is created
 - **THEN** it SHALL implement an interface defined in `/Business/Services` or `/Business/Abstractions`
+
+#### Scenario: Repository folder structure follows convention
+- **WHEN** a concrete repository is created for the `Workflow` entity
+- **THEN** it SHALL be placed at `./Infrastructure/Repositories/Workflows/WorkflowRepository.cs`
+- **AND** the folder name SHALL be the pluralized entity name
+
+The `/Infrastructure/Repositories/` folder structure SHALL be:
+
+```
+/Infrastructure/Repositories/
+├── BaseStoredProcedureRepository.cs
+├── IStoredProcedureRepository.cs
+├── Workflows/
+│   ├── IWorkflowRepository.cs
+│   └── WorkflowRepository.cs
+└── Rules/
+    ├── IRuleRepository.cs
+    └── RuleRepository.cs
+```
+
+### Requirement: Stored Procedure Repository Pattern — Data Access
+
+ALL data access operations that mutate or query database records SHALL use stored procedures exclusively via `BaseStoredProcedureRepository<TEntity, TKey>`. The following rules SHALL apply:
+
+#### Scenario: Inline SQL is forbidden
+- **WHEN** inspecting any `.cs` file in the project
+- **THEN** it SHALL NOT contain embedded `SELECT`, `INSERT`, `UPDATE`, `DELETE`, or raw SQL strings for database operations
+- **AND** all database operations SHALL execute through calls to stored procedures
+
+#### Scenario: EF Core change tracking is disabled for repository operations
+- **WHEN** a repository method queries data
+- **THEN** it SHALL use `.AsNoTracking()` on all `FromSqlRaw` queries
+- **WHEN** a repository method mutates data
+- **THEN** it SHALL use `Context.Database.ExecuteSqlRawAsync()` directly, bypassing the EF Core change tracker
+
+#### Scenario: Controllers depend on service interfaces, not DbContext or repositories
+- **WHEN** a Controller class has a data dependency
+- **THEN** it SHALL depend on a service interface (e.g., `IWorkflowService`), NOT on `ApplicationDbContext` or a repository interface directly
+- **AND** the service SHALL depend on the repository interface (e.g., `IWorkflowRepository`)
+- **AND** the Controller SHALL NOT have a `using` directive for `Microsoft.EntityFrameworkCore` or `Infrastructure.Repositories`
+
+### Requirement: efpt.config.json — Absolute Source of Truth
+
+The `efpt.config.json` file SHALL serve as the authoritative whitelist for all database objects. ALL agents SHALL execute the Step 0 Pre-Execution Validation protocol before modifying any database-related code.
+
+#### Scenario: Every agent verifies the whitelist before acting
+- **WHEN** an agent begins a task that involves database objects
+- **THEN** it SHALL load `efpt.config.json`, parse the `Tables` and `StoredProcedures` arrays, and verify all required objects exist
+- **AND** if objects are missing, it SHALL execute the Agentic Correction Routine defined in the `agent-validation-protocol` specification
 
 ### Requirement: Modern C# language features
 

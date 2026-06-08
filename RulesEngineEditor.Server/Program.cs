@@ -2,9 +2,11 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-//using RulesEngineEditor.Server.Business.Services;
+using RulesEngineEditor.Server.Business.Entities.Models;
+using RulesEngineEditor.Server.Business.Services;
 using RulesEngineEditor.Server.Infrastructure.Data;
 using RulesEngineEditor.Server.Infrastructure.Identity;
+using RulesEngineEditor.Server.Infrastructure.Repositories;
 using RulesEngineEditor.Server.Middleware;
 using Scalar.AspNetCore;
 using System.Security.Claims;
@@ -30,6 +32,8 @@ builder.Services.AddOpenApi();
 // Database
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+builder.Services.AddDbContext<RulesEngineEditorContext>(options =>
+    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
 // Identity + Passkey
 builder.Services.AddWebApiIdentity();
@@ -37,7 +41,8 @@ builder.Services.AddPasskeySupport();
 builder.Services.AddAuthorization();
 
 // Business Services
-//builder.Services.AddScoped<IProductService, ProductService>();
+builder.Services.AddScoped<IUserRepository, UserRepository>();
+builder.Services.AddScoped<IAdminUserService, AdminUserService>();
 
 // Error Handling
 builder.Services.AddExceptionHandler<GlobalExceptionHandler>();
