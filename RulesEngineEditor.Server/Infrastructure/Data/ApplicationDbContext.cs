@@ -5,7 +5,7 @@ using RulesEngineEditor.Server.Business.Entities;
 
 namespace RulesEngineEditor.Server.Infrastructure.Data;
 
-public sealed class ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
+public sealed partial class ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
     : IdentityDbContext<IdentityUser>(options)
 {
 

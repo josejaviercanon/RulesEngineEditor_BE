@@ -24,8 +24,12 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Business\Services\Models\" />
+    <Folder Include="Business\Services\" />
     <Folder Include="Infrastructure\Data\Configurations\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="efpt.config.json.user" />
   </ItemGroup>
 
 </Project>
