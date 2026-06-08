@@ -8,7 +8,10 @@ public static class IdentityConfiguration
     public static IServiceCollection AddWebApiIdentity(this IServiceCollection services)
     {
         services.AddIdentityApiEndpoints<IdentityUser>()
+            .AddRoles<IdentityRole>()
             .AddEntityFrameworkStores<ApplicationDbContext>();
+
+        services.AddScoped<IUserClaimsPrincipalFactory<IdentityUser>, TokenService>();
 
         return services;
     }

@@ -23,4 +23,9 @@
     <ProjectReference Include="..\BE.Libraries\RulesEngine\src\RulesEngine\RulesEngine.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Business\Services\Models\" />
+    <Folder Include="Infrastructure\Data\Configurations\" />
+  </ItemGroup>
+
 </Project>

@@ -14,11 +14,11 @@ public sealed class AuditableEntityInterceptor : SaveChangesInterceptor
         if (eventData.Context is not null)
         {
             var now = DateTime.UtcNow;
-            foreach (var entry in eventData.Context.ChangeTracker.Entries<Product>()
-                         .Where(e => e.State == EntityState.Modified))
-            {
-                entry.Property(p => p.UpdatedAtUtc).CurrentValue = now;
-            }
+            //foreach (var entry in eventData.Context.ChangeTracker.Entries<T>()
+            //             .Where(e => e.State == EntityState.Modified))
+            //{
+            //    entry.Property(p => p.UpdatedAtUtc).CurrentValue = now;
+            //}
         }
 
         return await base.SavingChangesAsync(eventData, result, cancellationToken);
