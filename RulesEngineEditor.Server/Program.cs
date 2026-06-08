@@ -1,25 +1,47 @@
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Scalar.AspNetCore;
-using System.Text.Json.Serialization;
-using static System.Net.WebRequestMethods;
-
+using RulesEngineEditor.Server.Business.Services;
+using RulesEngineEditor.Server.Infrastructure.Data;
+using RulesEngineEditor.Server.Infrastructure.Identity;
+using RulesEngineEditor.Server.Middleware;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// >>===>> Add services to the container.
+// Add services to the container.
 
-// Add a CORS policy for the client
-// Add .AllowCredentials() for apps that use an Identity Provider for authn/z
-builder.Services.AddCors(
-    options => options.AddPolicy(
-        "localhost",
-        policy => policy.WithOrigins("https://localhost")
-            .AllowAnyMethod()
-            .AllowAnyHeader()));
+builder.Services.AddCors(options => options.AddPolicy(
+    "allowAll",
+    policy => policy.AllowAnyOrigin()
+        .AllowAnyMethod()
+        .AllowAnyHeader()));
 
-builder.Services.AddControllers();
+builder.Services.AddControllers()
+    .AddJsonOptions(options =>
+    {
+        options.JsonSerializerOptions.PropertyNamingPolicy = System.Text.Json.JsonNamingPolicy.CamelCase;
+    });
 
-builder.Services.AddOpenApi(); // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
+builder.Services.AddOpenApi();
+
+// Database
+builder.Services.AddDbContext<ApplicationDbContext>(options =>
+    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+
+// Identity + Passkey
+builder.Services.AddWebApiIdentity();
+builder.Services.AddPasskeySupport();
+builder.Services.AddAuthentication()
+    .AddBearerToken(IdentityConstants.BearerScheme);
+builder.Services.AddAuthorization();
+
+// Business Services
+builder.Services.AddScoped<IProductPriceService, ProductPriceService>();
+builder.Services.AddScoped<IProductService, ProductService>();
+
+// Error Handling
+builder.Services.AddExceptionHandler<GlobalExceptionHandler>();
+builder.Services.AddProblemDetails();
 
 var app = builder.Build();
 
@@ -28,19 +50,21 @@ if (app.Environment.IsDevelopment())
     app.UseDeveloperExceptionPage();
     app.MapOpenApi();
     app.MapScalarApiReference();
-
 }
 
-// Activate the CORS policy
-app.UseCors("localhost");
+app.UseExceptionHandler();
+
+app.UseCors("allowAll");
 
 app.UseHttpsRedirection();
 
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();
 
+app.MapIdentityApi<IdentityUser>();
+
 app.MapGet("/", () => "RulesEngine Editor Web API.");
 
-// >>===>> Add run container.
 await app.RunAsync();

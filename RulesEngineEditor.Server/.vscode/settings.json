@@ -1,0 +1,5 @@
+{
+    "editor.defaultFormatter": "vscode.typescript-language-features",
+    "vscode-edge-devtools.defaultUrl": "http://localhost:5064",
+    "vscode-edge-devtools.browserFlavor": "Stable"
+}
