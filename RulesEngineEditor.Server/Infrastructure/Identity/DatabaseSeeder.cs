@@ -5,14 +5,18 @@ namespace RulesEngineEditor.Server.Infrastructure.Identity;
 
 public static class DatabaseSeeder
 {
+    public const string AdministratorRoleName = "Administrator";
+    public const string DefaultAdminEmail = "admin@localhost.local";
+    public const string DefaultAdminPassword = "Admin@123456"; // Strong password meeting default requirements
+
     public static async Task SeedAdminUserAsync(
         UserManager<IdentityUser> userManager,
         RoleManager<IdentityRole> roleManager,
         ILogger<Program> logger)
     {
-        string roleName = "Administrator";
-        string adminEmail = "admin@localhost.local";
-        const string adminPassword = "Admin@123456"; // Strong password meeting default requirements
+        string roleName = AdministratorRoleName;
+        string adminEmail = DefaultAdminEmail;
+        const string adminPassword = DefaultAdminPassword;
 
         // 1. Ensure the Administrator role exists
         if (!await roleManager.RoleExistsAsync(roleName))

@@ -147,6 +147,25 @@ if (app.Environment.IsDevelopment())
         }
     }
 
+    // autologin
+    app.Use(async (context, next) => {
+        if (context.User.Identity?.IsAuthenticated != true)
+        {
+            context.User = new ClaimsPrincipal(
+                new ClaimsIdentity(
+                    [
+                        new Claim(ClaimTypes.NameIdentifier, DatabaseSeeder.DefaultAdminEmail),
+                        new Claim(ClaimTypes.Name, DatabaseSeeder.DefaultAdminEmail),
+                        new Claim(ClaimTypes.Email, DatabaseSeeder.DefaultAdminEmail),
+                        new Claim(ClaimTypes.Role, DatabaseSeeder.AdministratorRoleName)
+                    ],
+                    authenticationType: "Development"));
+        }
+
+        await next();
+    });
+
+
 }
 
 app.MapGet("/", () => "RulesEngine Editor Web API.");
