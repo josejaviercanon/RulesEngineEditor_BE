@@ -43,6 +43,8 @@ builder.Services.AddAuthorization();
 // Business Services
 builder.Services.AddScoped<IUserRepository, UserRepository>();
 builder.Services.AddScoped<IAdminUserService, AdminUserService>();
+builder.Services.AddScoped<IRulesRepository, RulesRepository>();
+builder.Services.AddScoped<IRulesEvaluationService, RulesEvaluationService>();
 
 // Error Handling
 builder.Services.AddExceptionHandler<GlobalExceptionHandler>();

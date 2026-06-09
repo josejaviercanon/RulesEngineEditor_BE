@@ -1,6 +1,8 @@
 // Copyright (c) Alex Reich.
 // Licensed under the CC BY 4.0 License.
+// REMOVED: Template scaffold controller. Replaced by feature controllers (RulesController, AdminUsersController).
 
+/*
 using Microsoft.AspNetCore.Mvc;
 
 namespace RulesEngineEditor.Server.Controllers
@@ -26,3 +28,4 @@ namespace RulesEngineEditor.Server.Controllers
         }
     }
 }
+*/

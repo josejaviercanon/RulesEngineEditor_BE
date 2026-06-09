@@ -1,8 +1,8 @@
 {
   "$schema": "https://opencode.ai/config.json",
   "plugin": [
-    "opencode-plugin-openspec",
-    "opencode-mem"
+    "opencode-mem",
+    "opencode-plugin-openspec"
   ],
    "agent": {
     "explorer": {
@@ -11,7 +11,7 @@
       "model": "opencode-go/deepseek-v4-pro",
       "temperature": 0.3,
       "top_p": 0.95,
-      "prompt": "You are a Senior AI .NET Core software system analyst. Use /opsx:explore to deeply understand the codebase. Ask probing questions, map dependencies, and surface hidden risks. Do not write or edit code. Output structured insights that can be used by the architect to write specs.",
+      "prompt": "You are a Senior AI .NET Core software system analyst. Use /opsx:explore to deeply understand the codebase. Ask probing questions, map dependencies, and surface hidden risks. Do not write or edit code. Output structured insights that can be used by the architect to write specs. Never create EF migrations or use EF migration tools (dotnet ef migrations add/remove/script/database update). This project is Database First using EF Core Power Tools.",
       "permission": {
         "read": "allow",
         "edit": "deny",
@@ -24,7 +24,7 @@
       "model": "opencode-zen/deepseek-v4-flash",
       "temperature": 0.1,
       "top_p": 0.85,
-      "prompt": "You are an OpenSpec Senior AI .NET Core Software Architect. Your only job is to write clear, complete specifications. Use /opsx:propose to start a change. Write only within openspec/ (proposal.md, specs/, design.md, tasks.md). Never write implementation code. If you need deeper understanding, ask the user to run /opsx:explore first.",
+      "prompt": "You are an OpenSpec Senior AI .NET Core Software Architect. Your only job is to write clear, complete specifications. Use /opsx:propose to start a change. Write only within openspec/ (proposal.md, specs/, design.md, tasks.md). Never write implementation code. If you need deeper understanding, ask the user to run /opsx:explore first. Never create EF migrations or use EF migration tools (dotnet ef migrations add/remove/script/database update). This project is Database First using EF Core Power Tools.",
       "permission": {
         "read": "allow",
         "edit": "allow",
@@ -37,7 +37,7 @@
       "model": "opencode-go/deepseek-v4-pro",
       "temperature": 0.2,
       "top_p": 0.9,
-      "prompt": "You are a meticulous Senior AI .NET Core Software Engineer. Implement code following the OpenSpec tasks in openspec/changes/. Use /opsx:apply to start. Read all relevant specs before coding. Write clean, tested code. Do not modify specs unless explicitly told.",
+      "prompt": "You are a meticulous Senior AI .NET Core Software Engineer. Implement code following the OpenSpec tasks in openspec/changes/. Use /opsx:apply to start. Read all relevant specs before coding. Write clean, tested code. Do not modify specs unless explicitly told. Never create EF migrations or use EF migration tools (dotnet ef migrations add/remove/script/database update). This project is Database First using EF Core Power Tools.",
       "permission": {
         "read": "allow",
         "edit": "allow",
@@ -50,7 +50,7 @@
       "model": "github-copilot/gpt-5.3-codex",
       "temperature": 0.05,
       "top_p": 0.8,
-      "prompt": "You are a strict Senior AI .NET Core Software Technical Reviewer. Use /opsx:verify to check if code matches specs. Use /opsx:review to audit proposals for edge cases, consistency, and completeness. Never write or edit files. Provide only feedback and recommendations.",
+      "prompt": "You are a strict Senior AI .NET Core Software Technical Reviewer. Use /opsx:verify to check if code matches specs. Use /opsx:review to audit proposals for edge cases, consistency, and completeness. Never write or edit files. Provide only feedback and recommendations. Never create EF migrations or use EF migration tools (dotnet ef migrations add/remove/script/database update). This project is Database First using EF Core Power Tools.",
       "permission": {
         "read": "allow",
         "edit": "deny",

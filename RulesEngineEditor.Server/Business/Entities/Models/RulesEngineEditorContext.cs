@@ -27,6 +27,10 @@ public partial class RulesEngineEditorContext : DbContext
 
     public virtual DbSet<AspNetUsers> AspNetUsers { get; set; }
 
+    public virtual DbSet<WorkflowDefinitions> WorkflowDefinitions { get; set; }
+
+    public virtual DbSet<WorkflowTestScenarios> WorkflowTestScenarios { get; set; }
+
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder.Entity<AspNetRoles>(entity =>
@@ -41,6 +45,21 @@ public partial class RulesEngineEditorContext : DbContext
             entity.HasIndex(e => e.NormalizedUserName, "UserNameIndex")
                 .IsUnique()
                 .HasFilter("([NormalizedUserName] IS NOT NULL)");
+        });
+
+        modelBuilder.Entity<WorkflowDefinitions>(entity =>
+        {
+            entity.HasKey(e => e.WorkflowDefinitionId).HasName("PK__Workflow__30FF7BF6F88E6B4F");
+
+            entity.Property(e => e.CreatedAt).HasDefaultValueSql("(sysdatetimeoffset())");
+            entity.Property(e => e.Status).HasDefaultValue("Draft");
+        });
+
+        modelBuilder.Entity<WorkflowTestScenarios>(entity =>
+        {
+            entity.HasKey(e => e.ScenarioId).HasName("PK__Workflow__0DF6D183534E2D3D");
+
+            entity.Property(e => e.CreatedAt).HasDefaultValueSql("(sysdatetimeoffset())");
         });
 
         OnModelCreatingGeneratedFunctions(modelBuilder);

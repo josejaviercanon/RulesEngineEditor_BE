@@ -45,6 +45,14 @@
       {
          "Name": "[dbo].[AspNetUserTokens]",
          "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[WorkflowDefinitions]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[WorkflowTestScenarios]",
+         "ObjectType": 0
       }
    ],
    "UiHint": null,
