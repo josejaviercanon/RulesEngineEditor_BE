@@ -59,8 +59,6 @@ app.UseExceptionHandler();
 
 app.UseCors("allowAll");
 
-app.UseHttpsRedirection();
-
 app.UseAuthentication();
 app.UseAuthorization();
 
@@ -122,6 +120,14 @@ app.MapPost("/api/passkey/login-verify", async ([FromBody] string clientResponse
 })
 .AllowAnonymous();
 
+// 5. SECURED ENDPOINT: Logs out the currently authenticated user
+app.MapPost("/api/auth/logout", async (SignInManager<IdentityUser> signInManager) =>
+{
+    await signInManager.SignOutAsync();
+    return Results.Ok();
+})
+.RequireAuthorization();
+
 
 if (app.Environment.IsDevelopment())
 {
@@ -166,6 +172,9 @@ if (app.Environment.IsDevelopment())
     });
 
 
+}
+else {
+    app.UseHttpsRedirection();
 }
 
 app.MapGet("/", () => "RulesEngine Editor Web API.");
