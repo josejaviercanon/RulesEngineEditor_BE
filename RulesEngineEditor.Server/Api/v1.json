@@ -1,0 +1,1546 @@
+{
+  "openapi": "3.1.1",
+  "info": {
+    "title": "RulesEngineEditor.Server | v1",
+    "version": "1.0.0"
+  },
+  "servers": [
+    {
+      "url": "https://localhost:7119/"
+    }
+  ],
+  "paths": {
+    "/api/passkey/register-options": {
+      "post": {
+        "tags": [
+          "RulesEngineEditor.Server"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/passkey/register-verify": {
+      "post": {
+        "tags": [
+          "RulesEngineEditor.Server"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "string"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/passkey/login-options": {
+      "post": {
+        "tags": [
+          "RulesEngineEditor.Server"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/passkey/login-verify": {
+      "post": {
+        "tags": [
+          "RulesEngineEditor.Server"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "string"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/auth/logout": {
+      "post": {
+        "tags": [
+          "RulesEngineEditor.Server"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/": {
+      "get": {
+        "tags": [
+          "RulesEngineEditor.Server"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/register": {
+      "post": {
+        "tags": [
+          "RulesEngineEditor.Server"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RegisterRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HttpValidationProblemDetails"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/login": {
+      "post": {
+        "tags": [
+          "RulesEngineEditor.Server"
+        ],
+        "parameters": [
+          {
+            "name": "useCookies",
+            "in": "query",
+            "schema": {
+              "type": "boolean"
+            }
+          },
+          {
+            "name": "useSessionCookies",
+            "in": "query",
+            "schema": {
+              "type": "boolean"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/LoginRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AccessTokenResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/refresh": {
+      "post": {
+        "tags": [
+          "RulesEngineEditor.Server"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RefreshRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AccessTokenResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/confirmEmail": {
+      "get": {
+        "tags": [
+          "RulesEngineEditor.Server"
+        ],
+        "operationId": "MapIdentityApi-/confirmEmail",
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "code",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "changedEmail",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/resendConfirmationEmail": {
+      "post": {
+        "tags": [
+          "RulesEngineEditor.Server"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ResendConfirmationEmailRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/forgotPassword": {
+      "post": {
+        "tags": [
+          "RulesEngineEditor.Server"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ForgotPasswordRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HttpValidationProblemDetails"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/resetPassword": {
+      "post": {
+        "tags": [
+          "RulesEngineEditor.Server"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ResetPasswordRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HttpValidationProblemDetails"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/manage/2fa": {
+      "post": {
+        "tags": [
+          "RulesEngineEditor.Server"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/TwoFactorRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TwoFactorResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HttpValidationProblemDetails"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        }
+      }
+    },
+    "/manage/info": {
+      "get": {
+        "tags": [
+          "RulesEngineEditor.Server"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/InfoResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HttpValidationProblemDetails"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "RulesEngineEditor.Server"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/InfoRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/InfoResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HttpValidationProblemDetails"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        }
+      }
+    },
+    "/api/admin/users": {
+      "get": {
+        "tags": [
+          "AdminUsers"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/AdminUserDto"
+                  }
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/AdminUserDto"
+                  }
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/AdminUserDto"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/Rules": {
+      "get": {
+        "tags": [
+          "Rules"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/WorkflowSummaryResponse"
+                  }
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/WorkflowSummaryResponse"
+                  }
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/WorkflowSummaryResponse"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/Rules/dry-run": {
+      "post": {
+        "tags": [
+          "Rules"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/DryRunRequest"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/DryRunRequest"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/DryRunRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/EvaluationResult"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/EvaluationResult"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/EvaluationResult"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/Rules/scenarios": {
+      "post": {
+        "tags": [
+          "Rules"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SaveScenarioRequest"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SaveScenarioRequest"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/SaveScenarioRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "description": "Created",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/WorkflowTestScenarios"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/WorkflowTestScenarios"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/WorkflowTestScenarios"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/Rules/{id}": {
+      "get": {
+        "tags": ["Rules"],
+        "parameters": [{"name": "id","in": "path","required": true,"schema": {"type": "integer","format": "int32"}}],
+        "responses": {
+          "200": {"description": "OK","content": {"text/plain": {"schema": {"$ref": "#/components/schemas/WorkflowDefinitionResponse"}},"application/json": {"schema": {"$ref": "#/components/schemas/WorkflowDefinitionResponse"}},"text/json": {"schema": {"$ref": "#/components/schemas/WorkflowDefinitionResponse"}}}},"404": {"description": "Not Found"}
+        }
+      },
+      "put": {
+        "tags": ["Rules"],
+        "parameters": [{"name": "id","in": "path","required": true,"schema": {"type": "integer","format": "int32"}}],
+        "requestBody": {"content": {"application/json": {"schema": {"$ref": "#/components/schemas/UpdateWorkflowRequest"}},"text/json": {"schema": {"$ref": "#/components/schemas/UpdateWorkflowRequest"}},"application/*+json": {"schema": {"$ref": "#/components/schemas/UpdateWorkflowRequest"}}},"required": true},
+        "responses": {
+          "200": {"description": "OK","content": {"text/plain": {"schema": {"$ref": "#/components/schemas/WorkflowDefinitionResponse"}},"application/json": {"schema": {"$ref": "#/components/schemas/WorkflowDefinitionResponse"}},"text/json": {"schema": {"$ref": "#/components/schemas/WorkflowDefinitionResponse"}}}},"400": {"description": "Bad Request","content": {"text/plain": {"schema": {"$ref": "#/components/schemas/ProblemDetails"}},"application/json": {"schema": {"$ref": "#/components/schemas/ProblemDetails"}},"text/json": {"schema": {"$ref": "#/components/schemas/ProblemDetails"}}}},"404": {"description": "Not Found"},"409": {"description": "Conflict"}
+        }
+      },
+      "delete": {
+        "tags": ["Rules"],
+        "parameters": [{"name": "id","in": "path","required": true,"schema": {"type": "integer","format": "int32"}}],
+        "responses": {"204": {"description": "No Content"},"404": {"description": "Not Found"}}
+      }
+    },
+    "/api/Rules": {
+      "post": {
+        "tags": ["Rules"],
+        "requestBody": {"content": {"application/json": {"schema": {"$ref": "#/components/schemas/CreateWorkflowRequest"}},"text/json": {"schema": {"$ref": "#/components/schemas/CreateWorkflowRequest"}},"application/*+json": {"schema": {"$ref": "#/components/schemas/CreateWorkflowRequest"}}},"required": true},
+        "responses": {
+          "201": {"description": "Created","content": {"text/plain": {"schema": {"$ref": "#/components/schemas/WorkflowDefinitionResponse"}},"application/json": {"schema": {"$ref": "#/components/schemas/WorkflowDefinitionResponse"}},"text/json": {"schema": {"$ref": "#/components/schemas/WorkflowDefinitionResponse"}}}},"400": {"description": "Bad Request","content": {"text/plain": {"schema": {"$ref": "#/components/schemas/ProblemDetails"}},"application/json": {"schema": {"$ref": "#/components/schemas/ProblemDetails"}},"text/json": {"schema": {"$ref": "#/components/schemas/ProblemDetails"}}}},"409": {"description": "Conflict"}
+        }
+      }
+    },
+    "/api/Rules/scenarios": {
+      "get": {
+        "tags": ["Rules"],
+        "parameters": [{"name": "workflowId","in": "query","schema": {"type": "integer","format": "int32"}}],
+        "responses": {
+          "200": {"description": "OK","content": {"text/plain": {"schema": {"type": "array","items": {"$ref": "#/components/schemas/ScenarioResponse"}}},"application/json": {"schema": {"type": "array","items": {"$ref": "#/components/schemas/ScenarioResponse"}}},"text/json": {"schema": {"type": "array","items": {"$ref": "#/components/schemas/ScenarioResponse"}}}}}
+        }
+      }
+    },
+    "/api/Rules/scenarios/{id}": {
+      "get": {
+        "tags": ["Rules"],
+        "parameters": [{"name": "id","in": "path","required": true,"schema": {"type": "integer","format": "int32"}}],
+        "responses": {
+          "200": {"description": "OK","content": {"text/plain": {"schema": {"$ref": "#/components/schemas/ScenarioResponse"}},"application/json": {"schema": {"$ref": "#/components/schemas/ScenarioResponse"}},"text/json": {"schema": {"$ref": "#/components/schemas/ScenarioResponse"}}}},"404": {"description": "Not Found"}
+        }
+      },
+      "put": {
+        "tags": ["Rules"],
+        "parameters": [{"name": "id","in": "path","required": true,"schema": {"type": "integer","format": "int32"}}],
+        "requestBody": {"content": {"application/json": {"schema": {"$ref": "#/components/schemas/UpdateScenarioRequest"}},"text/json": {"schema": {"$ref": "#/components/schemas/UpdateScenarioRequest"}},"application/*+json": {"schema": {"$ref": "#/components/schemas/UpdateScenarioRequest"}}},"required": true},
+        "responses": {
+          "200": {"description": "OK","content": {"text/plain": {"schema": {"$ref": "#/components/schemas/ScenarioResponse"}},"application/json": {"schema": {"$ref": "#/components/schemas/ScenarioResponse"}},"text/json": {"schema": {"$ref": "#/components/schemas/ScenarioResponse"}}}},"400": {"description": "Bad Request","content": {"text/plain": {"schema": {"$ref": "#/components/schemas/ProblemDetails"}},"application/json": {"schema": {"$ref": "#/components/schemas/ProblemDetails"}},"text/json": {"schema": {"$ref": "#/components/schemas/ProblemDetails"}}}},"404": {"description": "Not Found"}
+        }
+      },
+      "delete": {
+        "tags": ["Rules"],
+        "parameters": [{"name": "id","in": "path","required": true,"schema": {"type": "integer","format": "int32"}}],
+        "responses": {"204": {"description": "No Content"},"404": {"description": "Not Found"}}
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "AccessTokenResponse": {
+        "required": [
+          "accessToken",
+          "expiresIn",
+          "refreshToken"
+        ],
+        "type": "object",
+        "properties": {
+          "tokenType": {
+            "type": [
+              "null",
+              "string"
+            ]
+          },
+          "accessToken": {
+            "type": "string"
+          },
+          "expiresIn": {
+            "pattern": "^-?(?:0|[1-9]\\d*)$",
+            "type": [
+              "integer",
+              "string"
+            ],
+            "format": "int64"
+          },
+          "refreshToken": {
+            "type": "string"
+          }
+        }
+      },
+      "ActionInfo": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": [
+              "null",
+              "string"
+            ]
+          },
+          "context": {
+            "type": [
+              "null",
+              "object"
+            ]
+          }
+        }
+      },
+      "ActionResult": {
+        "type": "object",
+        "properties": {
+          "output": {},
+          "exception": {
+            "$ref": "#/components/schemas/Exception"
+          }
+        }
+      },
+      "AdminUserDto": {
+        "required": [
+          "id",
+          "userName",
+          "email",
+          "emailConfirmed",
+          "twoFactorEnabled",
+          "lockoutEnabled"
+        ],
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "userName": {
+            "type": [
+              "null",
+              "string"
+            ]
+          },
+          "email": {
+            "type": [
+              "null",
+              "string"
+            ]
+          },
+          "emailConfirmed": {
+            "type": "boolean"
+          },
+          "twoFactorEnabled": {
+            "type": "boolean"
+          },
+          "lockoutEnabled": {
+            "type": "boolean"
+          }
+        }
+      },
+      "DryRunRequest": {
+        "required": [
+          "rulesJson",
+          "factsJson"
+        ],
+        "type": "object",
+        "properties": {
+          "rulesJson": {
+            "type": "string"
+          },
+          "factsJson": {
+            "type": "string"
+          },
+          "settingsJson": {
+            "type": [
+              "null",
+              "string"
+            ]
+          },
+          "customTypes": {
+            "type": [
+              "null",
+              "array"
+            ],
+            "items": {
+              "type": "string"
+            }
+          }
+        }
+      },
+      "EvaluationResult": {
+        "required": [
+          "isSuccess",
+          "ruleResultTree",
+          "errorMessage"
+        ],
+        "type": "object",
+        "properties": {
+          "isSuccess": {
+            "type": "boolean"
+          },
+          "ruleResultTree": {
+            "type": [
+              "null",
+              "array"
+            ],
+            "items": {
+              "$ref": "#/components/schemas/RuleResultTree"
+            }
+          },
+          "errorMessage": {
+            "type": [
+              "null",
+              "string"
+            ]
+          }
+        }
+      },
+      "Exception": {
+        "type": "object",
+        "properties": {
+          "targetSite": {
+            "$ref": "#/components/schemas/MethodBase"
+          },
+          "message": {
+            "type": [
+              "null",
+              "string"
+            ]
+          },
+          "data": {
+            "type": [
+              "null",
+              "object"
+            ]
+          },
+          "innerException": {
+            "$ref": "#/components/schemas/Exception"
+          },
+          "helpLink": {
+            "type": [
+              "null",
+              "string"
+            ]
+          },
+          "source": {
+            "type": [
+              "null",
+              "string"
+            ]
+          },
+          "hResult": {
+            "pattern": "^-?(?:0|[1-9]\\d*)$",
+            "type": [
+              "integer",
+              "string"
+            ],
+            "format": "int32"
+          },
+          "stackTrace": {
+            "type": [
+              "null",
+              "string"
+            ]
+          }
+        }
+      },
+      "ForgotPasswordRequest": {
+        "required": [
+          "email"
+        ],
+        "type": "object",
+        "properties": {
+          "email": {
+            "type": "string"
+          }
+        }
+      },
+      "HttpValidationProblemDetails": {
+        "type": "object",
+        "properties": {
+          "type": {
+            "type": [
+              "null",
+              "string"
+            ]
+          },
+          "title": {
+            "type": [
+              "null",
+              "string"
+            ]
+          },
+          "status": {
+            "pattern": "^-?(?:0|[1-9]\\d*)$",
+            "type": [
+              "null",
+              "integer",
+              "string"
+            ],
+            "format": "int32"
+          },
+          "detail": {
+            "type": [
+              "null",
+              "string"
+            ]
+          },
+          "instance": {
+            "type": [
+              "null",
+              "string"
+            ]
+          },
+          "errors": {
+            "type": "object",
+            "additionalProperties": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            }
+          }
+        }
+      },
+      "InfoRequest": {
+        "type": "object",
+        "properties": {
+          "newEmail": {
+            "type": [
+              "null",
+              "string"
+            ]
+          },
+          "newPassword": {
+            "type": [
+              "null",
+              "string"
+            ]
+          },
+          "oldPassword": {
+            "type": [
+              "null",
+              "string"
+            ]
+          }
+        }
+      },
+      "InfoResponse": {
+        "required": [
+          "email",
+          "isEmailConfirmed"
+        ],
+        "type": "object",
+        "properties": {
+          "email": {
+            "type": "string"
+          },
+          "isEmailConfirmed": {
+            "type": "boolean"
+          }
+        }
+      },
+      "LoginRequest": {
+        "required": [
+          "email",
+          "password"
+        ],
+        "type": "object",
+        "properties": {
+          "email": {
+            "type": "string"
+          },
+          "password": {
+            "type": "string"
+          },
+          "twoFactorCode": {
+            "type": [
+              "null",
+              "string"
+            ]
+          },
+          "twoFactorRecoveryCode": {
+            "type": [
+              "null",
+              "string"
+            ]
+          }
+        }
+      },
+      "MethodBase": {},
+      "ProblemDetails": {
+        "type": "object",
+        "properties": {
+          "type": {
+            "type": [
+              "null",
+              "string"
+            ]
+          },
+          "title": {
+            "type": [
+              "null",
+              "string"
+            ]
+          },
+          "status": {
+            "pattern": "^-?(?:0|[1-9]\\d*)$",
+            "type": [
+              "null",
+              "integer",
+              "string"
+            ],
+            "format": "int32"
+          },
+          "detail": {
+            "type": [
+              "null",
+              "string"
+            ]
+          },
+          "instance": {
+            "type": [
+              "null",
+              "string"
+            ]
+          }
+        }
+      },
+      "RefreshRequest": {
+        "required": [
+          "refreshToken"
+        ],
+        "type": "object",
+        "properties": {
+          "refreshToken": {
+            "type": "string"
+          }
+        }
+      },
+      "RegisterRequest": {
+        "required": [
+          "email",
+          "password"
+        ],
+        "type": "object",
+        "properties": {
+          "email": {
+            "type": "string"
+          },
+          "password": {
+            "type": "string"
+          }
+        }
+      },
+      "ResendConfirmationEmailRequest": {
+        "required": [
+          "email"
+        ],
+        "type": "object",
+        "properties": {
+          "email": {
+            "type": "string"
+          }
+        }
+      },
+      "ResetPasswordRequest": {
+        "required": [
+          "email",
+          "resetCode",
+          "newPassword"
+        ],
+        "type": "object",
+        "properties": {
+          "email": {
+            "type": "string"
+          },
+          "resetCode": {
+            "type": "string"
+          },
+          "newPassword": {
+            "type": "string"
+          }
+        }
+      },
+      "Rule": {
+        "type": "object",
+        "properties": {
+          "ruleName": {
+            "type": [
+              "null",
+              "string"
+            ]
+          },
+          "properties": {
+            "type": [
+              "null",
+              "object"
+            ]
+          },
+          "operator": {
+            "type": [
+              "null",
+              "string"
+            ]
+          },
+          "errorMessage": {
+            "type": [
+              "null",
+              "string"
+            ]
+          },
+          "enabled": {
+            "type": "boolean"
+          },
+          "ruleExpressionType": {
+            "$ref": "#/components/schemas/RuleExpressionType"
+          },
+          "workflowsToInject": {
+            "type": [
+              "null",
+              "array"
+            ],
+            "items": {
+              "type": "string"
+            }
+          },
+          "rules": {
+            "type": [
+              "null",
+              "array"
+            ],
+            "items": {
+              "$ref": "#/components/schemas/Rule"
+            }
+          },
+          "localParams": {
+            "type": [
+              "null",
+              "array"
+            ],
+            "items": {
+              "$ref": "#/components/schemas/ScopedParam"
+            }
+          },
+          "expression": {
+            "type": [
+              "null",
+              "string"
+            ]
+          },
+          "actions": {
+            "$ref": "#/components/schemas/RuleActions"
+          },
+          "successEvent": {
+            "type": [
+              "null",
+              "string"
+            ]
+          }
+        }
+      },
+      "RuleActions": {
+        "type": "object",
+        "properties": {
+          "onSuccess": {
+            "$ref": "#/components/schemas/ActionInfo"
+          },
+          "onFailure": {
+            "$ref": "#/components/schemas/ActionInfo"
+          }
+        }
+      },
+      "RuleExpressionType": {
+        "enum": [
+          "LambdaExpression"
+        ]
+      },
+      "RuleResultTree": {
+        "type": "object",
+        "properties": {
+          "rule": {
+            "$ref": "#/components/schemas/Rule"
+          },
+          "isSuccess": {
+            "type": "boolean"
+          },
+          "childResults": {
+            "type": [
+              "null",
+              "array"
+            ],
+            "items": {
+              "$ref": "#/components/schemas/RuleResultTree"
+            }
+          },
+          "inputs": {
+            "type": [
+              "null",
+              "object"
+            ]
+          },
+          "actionResult": {
+            "$ref": "#/components/schemas/ActionResult"
+          },
+          "exceptionMessage": {
+            "type": [
+              "null",
+              "string"
+            ]
+          }
+        }
+      },
+      "SaveScenarioRequest": {
+        "required": [
+          "workflowDefinitionId",
+          "scenarioName",
+          "mockInputJson"
+        ],
+        "type": "object",
+        "properties": {
+          "workflowDefinitionId": {
+            "pattern": "^-?(?:0|[1-9]\\d*)$",
+            "type": [
+              "integer",
+              "string"
+            ],
+            "format": "int32"
+          },
+          "scenarioName": {
+            "type": "string"
+          },
+          "mockInputJson": {
+            "type": "string"
+          },
+          "expectedOutputJson": {
+            "type": [
+              "null",
+              "string"
+            ]
+          }
+        }
+      },
+      "ScopedParam": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": [
+              "null",
+              "string"
+            ]
+          },
+          "expression": {
+            "type": [
+              "null",
+              "string"
+            ]
+          }
+        }
+      },
+      "TwoFactorRequest": {
+        "type": "object",
+        "properties": {
+          "enable": {
+            "type": [
+              "null",
+              "boolean"
+            ]
+          },
+          "twoFactorCode": {
+            "type": [
+              "null",
+              "string"
+            ]
+          },
+          "resetSharedKey": {
+            "type": "boolean"
+          },
+          "resetRecoveryCodes": {
+            "type": "boolean"
+          },
+          "forgetMachine": {
+            "type": "boolean"
+          }
+        }
+      },
+      "TwoFactorResponse": {
+        "required": [
+          "sharedKey",
+          "recoveryCodesLeft",
+          "isTwoFactorEnabled",
+          "isMachineRemembered"
+        ],
+        "type": "object",
+        "properties": {
+          "sharedKey": {
+            "type": "string"
+          },
+          "recoveryCodesLeft": {
+            "pattern": "^-?(?:0|[1-9]\\d*)$",
+            "type": [
+              "integer",
+              "string"
+            ],
+            "format": "int32"
+          },
+          "recoveryCodes": {
+            "type": [
+              "null",
+              "array"
+            ],
+            "items": {
+              "type": "string"
+            }
+          },
+          "isTwoFactorEnabled": {
+            "type": "boolean"
+          },
+          "isMachineRemembered": {
+            "type": "boolean"
+          }
+        }
+      },
+      "WorkflowSummaryResponse": {
+        "required": [
+          "workflowDefinitionId",
+          "workflowName",
+          "version",
+          "status",
+          "createdAt",
+          "createdBy"
+        ],
+        "type": "object",
+        "properties": {
+          "workflowDefinitionId": {
+            "pattern": "^-?(?:0|[1-9]\\d*)$",
+            "type": [
+              "integer",
+              "string"
+            ],
+            "format": "int32"
+          },
+          "workflowName": {
+            "type": "string"
+          },
+          "version": {
+            "pattern": "^-?(?:0|[1-9]\\d*)$",
+            "type": [
+              "integer",
+              "string"
+            ],
+            "format": "int32"
+          },
+          "status": {
+            "type": "string"
+          },
+          "createdAt": {
+            "type": [
+              "null",
+              "string"
+            ],
+            "format": "date-time"
+          },
+          "createdBy": {
+            "type": [
+              "null",
+              "string"
+            ]
+          }
+        }
+      },
+      "WorkflowTestScenarios": {
+        "type": "object",
+        "properties": {
+          "scenarioId": {
+            "pattern": "^-?(?:0|[1-9]\\d*)$",
+            "type": [
+              "integer",
+              "string"
+            ],
+            "format": "int32"
+          },
+          "workflowDefinitionId": {
+            "pattern": "^-?(?:0|[1-9]\\d*)$",
+            "type": [
+              "integer",
+              "string"
+            ],
+            "format": "int32"
+          },
+          "scenarioName": {
+            "maxLength": 255,
+            "minLength": 0,
+            "type": "string"
+          },
+          "mockInputJson": {
+            "type": "string"
+          },
+          "expectedOutputJson": {
+            "type": [
+              "null",
+              "string"
+            ]
+          },
+          "createdAt": {
+            "type": [
+              "null",
+              "string"
+            ],
+            "format": "date-time"
+          }
+        }
+      },
+      "CreateWorkflowRequest": {
+        "required": ["workflowName","version","jsonContent","status"],
+        "type": "object",
+        "properties": {
+          "workflowName": {"type": "string"},
+          "version": {"pattern": "^-?(?:0|[1-9]\\d*)$","type": ["integer","string"],"format": "int32"},
+          "jsonContent": {"type": "string"},
+          "status": {"type": "string"}
+        }
+      },
+      "ScenarioResponse": {
+        "required": ["scenarioId","workflowDefinitionId","scenarioName","mockInputJson","expectedOutputJson","createdAt"],
+        "type": "object",
+        "properties": {
+          "scenarioId": {"pattern": "^-?(?:0|[1-9]\\d*)$","type": ["integer","string"],"format": "int32"},
+          "workflowDefinitionId": {"pattern": "^-?(?:0|[1-9]\\d*)$","type": ["integer","string"],"format": "int32"},
+          "scenarioName": {"type": "string"},
+          "mockInputJson": {"type": "string"},
+          "expectedOutputJson": {"type": ["null","string"]},
+          "createdAt": {"type": ["null","string"],"format": "date-time"}
+        }
+      },
+      "UpdateScenarioRequest": {
+        "type": "object",
+        "properties": {
+          "scenarioName": {"type": ["null","string"]},
+          "mockInputJson": {"type": ["null","string"]},
+          "expectedOutputJson": {"type": ["null","string"]}
+        }
+      },
+      "UpdateWorkflowRequest": {
+        "type": "object",
+        "properties": {
+          "workflowName": {"type": ["null","string"]},
+          "version": {"pattern": "^-?(?:0|[1-9]\\d*)$","type": ["null","integer","string"],"format": "int32"},
+          "jsonContent": {"type": ["null","string"]},
+          "status": {"type": ["null","string"]}
+        }
+      },
+      "WorkflowDefinitionResponse": {
+        "required": ["workflowDefinitionId","workflowName","version","jsonContent","status","createdAt","createdBy"],
+        "type": "object",
+        "properties": {
+          "workflowDefinitionId": {"pattern": "^-?(?:0|[1-9]\\d*)$","type": ["integer","string"],"format": "int32"},
+          "workflowName": {"type": "string"},
+          "version": {"pattern": "^-?(?:0|[1-9]\\d*)$","type": ["integer","string"],"format": "int32"},
+          "jsonContent": {"type": "string"},
+          "status": {"type": "string"},
+          "createdAt": {"type": ["null","string"],"format": "date-time"},
+          "createdBy": {"type": ["null","string"]}
+        }
+      }
+    }
+  },
+  "tags": [
+    {
+      "name": "RulesEngineEditor.Server"
+    },
+    {
+      "name": "AdminUsers"
+    },
+    {
+      "name": "Rules"
+    }
+  ]
+}
