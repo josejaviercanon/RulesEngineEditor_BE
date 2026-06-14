@@ -37,7 +37,8 @@ public sealed class RulesEvaluationService : IRulesEvaluationService
             RuleParameter[] ruleParameters;
             try
             {
-                var facts = JsonConvert.DeserializeObject<Dictionary<string, object>>(factsJson);
+                var converter = new Newtonsoft.Json.Converters.ExpandoObjectConverter();
+                var facts = JsonConvert.DeserializeObject<System.Dynamic.ExpandoObject>(factsJson, converter) as IDictionary<string, object>;
                 if (facts is null or { Count: 0 })
                 {
                     return new EvaluationResult(false, null, "FactsJson must contain at least one fact.");
